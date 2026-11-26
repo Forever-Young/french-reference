@@ -29,6 +29,12 @@ function Pandoc(doc)
     pandoc.BulletList(entries)
   }, pandoc.Attr('table-of-contents', {'table-of-contents'}))
   for i, block in ipairs(doc.blocks) do
+    if block.t == 'Div' and block.classes:includes('ai-note') then
+      doc.blocks:insert(i + 1, toc)
+      return doc
+    end
+  end
+  for i, block in ipairs(doc.blocks) do
     if block.t == 'Div' and block.classes:includes('build-timestamp') then
       doc.blocks:insert(i + 1, toc)
       return doc
